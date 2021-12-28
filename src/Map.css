@@ -1,0 +1,5 @@
+#theMap {
+  transform: scale(0.3);
+   -ms-transform: scale(0.3);
+   -webkit-transform: scale(0.3);
+}

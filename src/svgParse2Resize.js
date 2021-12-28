@@ -3,7 +3,7 @@ export function svgParse2Resize(inputStr, floatScaleFactor) {
   //console.log(inputArr);
   let fsf = floatScaleFactor;
   let outputStr = "";
-  const numChars = ["1","2","3","4","5", "6","7","8","9","."]
+  const numChars = ["0","1","2","3","4","5", "6","7","8","9","."]
   const isNum = (myChar) => {
     return (numChars.includes(myChar));
   }

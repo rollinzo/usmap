@@ -12,24 +12,26 @@ export default function Map(){
 
   const State = (props) => {
     return <>
-              <path d={filterCommas(svgParse2Resize(usMap[props.state], 2.0))} fill="lightgreen" stroke="black" />
+              <path d={svgParse2Resize(filterCommas(usMap[props.state]),0.4)} fill="lightgreen" stroke="black" />
            </>;
   }
   const allStates = () => {
     return Object.keys(usMap).map((myState) => {
-           return <State state={myState} />
+          // if (myState != "ak" && myState != "wa") {
+             return <State key={myState} state={myState} />
+           //}
            // return <div>myState</div>
     });
   }
-  // useEffect(()=>{
-  //   console.log(allStates());
-  // },[]);
+  useEffect(()=>{
+    console.log(svgParse2Resize("M 200 200 L 350 200 L 500 350 L 500 500 L 350 650 L 200 650 L 50 500 L 50 350  Z",1.0));
+  },[]);
   const someStates = () => {
     return [<State state="tx" />, <State state="va" />, <State state="nc" />];
   }
 
   return <div id="mapDiv">
-    <svg id="theMap" height="1000" width="1000">
+    <svg id="theMap" width="500" height="500">
      {allStates()}
     </svg>
   </div>;

@@ -9,7 +9,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Map />
   </React.StrictMode>,
-  document.getElementById('reactMap')
+  document.getElementById('reactmap')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -35,11 +35,12 @@ export default function Map(){
      {allStates()}
     </svg>
     <h1>{announcedState()}</h1>
+    <div>{svgParse2Resize(filterCommas(usMap["mi"]),0.4)}</div>
   </div>;
 }
 
 const filterCommas = (stateData) => {
-  return stateData.replace(',',' ');
+  return stateData.replace(/,/g,' ');
 }
 
 const State = (props) => {

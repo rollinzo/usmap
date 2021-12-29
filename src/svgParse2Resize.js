@@ -27,7 +27,7 @@ export function svgParse2Resize(inputStr, floatScaleFactor) {
         currNumStr = currNumStr + inputArr[i];
         //do conversion
         //console.log("A: " + currNumStr);
-        currNum = parseFloat(currNumStr) * fsf;
+        currNum = (parseFloat(currNumStr) * fsf).toFixed(2);
 
         outputStr = outputStr + currNum;
         currNumStr = "";

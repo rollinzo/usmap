@@ -52,6 +52,6 @@ const State = (props) => {
     setMyFill("lightblue");
   }
   return <>
-            <path d={svgParse2Resize(filterCommas(usMap[props.state]),0.4)} fill={myFill} stroke={myStroke} onMouseOver={highlightState} onMouseOut={deHighlightState} onClick={()=>{ props.announceMe(props.state)}}/>
+            <path d={svgParse2Resize(filterCommas(usMap[props.state]),0.4)} fill={myFill} stroke={myStroke} onMouseOver={highlightState} onMouseOut={deHighlightState} onClick={()=>{ window.location.href = "https://kevinrollins.com/" + props.state}}/>
          </>;
 }

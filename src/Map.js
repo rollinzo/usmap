@@ -35,7 +35,7 @@ export default function Map(){
      {allStates()}
     </svg>
     <h1>{announcedState()}</h1>
-    <div>{svgParse2Resize(filterCommas(usMap["ak"]),0.4)}</div>
+    <div>{svgParse2Resize(filterCommas(usMap["wa"]),0.4)}</div>
   </div>;
 }
 

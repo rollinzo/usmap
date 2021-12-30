@@ -47,7 +47,7 @@ export function svgParse2Resize(inputStr, floatScaleFactor) {
         currNumStr = currNumStr + inputArr[i];
         parseNumMode = true;
       } else {
-        outputStr = outputStr + inputArr[i];
+        outputStr = outputStr + ' ' + inputArr[i] + ' ';
       }
     }
     i++;

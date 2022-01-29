@@ -5,15 +5,34 @@ import {svgParse2Resize} from './svgParse2Resize';
 
 export default function Map(){
   const [displayWidth, setDisplayWidth] = useState(getWidth());
+  const [floatScaleFactor, setFloatScaleFactor] = useState(0.4);
+  const [mapWidth, setMapWidth] = useState(600);
+  const [mapHeight, setMapHeight] = useState(400);
   const [selectedState, setSelectedState] = useState("Click on a State");
 
 
   const handleResize = () => {
     setDisplayWidth(getWidth());
+    //setFloatScaleFactor((displayWidth() / 600) * 0.4);
+    setFloatScaleFactor((displayWidth/600) * 0.4);
+    setMapWidth(0.8 * displayWidth);
+  }
+
+  //getWidth() from JQuery via https://stackoverflow.com/a/1038781
+  function getWidth() {
+    return Math.max(
+      document.body.scrollWidth,
+      document.documentElement.scrollWidth,
+      document.body.offsetWidth,
+      document.documentElement.offsetWidth,
+      document.documentElement.clientWidth
+    );
   }
 
   //https://www.pluralsight.com/guides/re-render-react-component-on-window-resize
   window.addEventListener('resize', handleResize);
+
+
 
   const announcedState = () =>{
     if (selectedState === "Click on a State") {
@@ -26,7 +45,7 @@ export default function Map(){
   const allStates = () => {
     return Object.keys(usMap).map((myState) => {
           // if (myState != "ak" && myState != "wa") {
-             return <State key={myState} state={myState} fill="lightblue" stroke="black" announceMe={setSelectedState}/>
+             return <State key={myState} state={myState} fsf={floatScaleFactor} fill="lightblue" stroke="black" announceMe={setSelectedState}/>
            //}
            // return <div>myState</div>
     });
@@ -34,7 +53,7 @@ export default function Map(){
 
   const displayMap = () => {
     return <div id="mapDiv">
-             <svg id="theMap" width="500" height="300">
+             <svg id="theMap" width={mapWidth} height="600">
                {allStates()}
              </svg>
            </div>;
@@ -44,9 +63,20 @@ export default function Map(){
     return <div id="mapDiv">Display Alternate to Map</div>;
   }
 
+  const defaultFSF = 0.4;
+  const minScreenSize = 600;
+  const defaultScreenSize = 800
+  const defaultMapSize = 600
+
+  //calculate the float scale factor for svgParse2Resize
+  const mapRatioFSF = () => {
+    return defaultFSF * defaultMapSize / defaultScreenSize
+  }
+
   const DisplayBasedOnWidth = () => {
     let myWidth = getWidth();
-    if (myWidth > 600) {
+    if (myWidth > minScreenSize) {
+      let myRatio
       return displayMap();
     } else {
       return altDisplay();
@@ -70,16 +100,6 @@ export default function Map(){
 
 // ********************************************************
 
-//getWidth() from JQuery via https://stackoverflow.com/a/1038781
-function getWidth() {
-  return Math.max(
-    document.body.scrollWidth,
-    document.documentElement.scrollWidth,
-    document.body.offsetWidth,
-    document.documentElement.offsetWidth,
-    document.documentElement.clientWidth
-  );
-}
 
 
 const filterCommas = (stateData) => {
@@ -96,6 +116,6 @@ const State = (props) => {
     setMyFill("lightblue");
   }
   return <>
-            <path d={svgParse2Resize(filterCommas(usMap[props.state]),0.4)} fill={myFill} stroke={myStroke} onMouseOver={highlightState} onMouseOut={deHighlightState} onClick={()=>{ window.location.href = "https://kevinrollins.com/" + props.state}}/>
+            <path d={svgParse2Resize(filterCommas(usMap[props.state]),props.fsf)} fill={myFill} stroke={myStroke} onMouseOver={highlightState} onMouseOut={deHighlightState} onClick={()=>{ window.location.href = "https://kevinrollins.com/" + props.state}}/>
          </>;
 }

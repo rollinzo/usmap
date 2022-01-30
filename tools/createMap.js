@@ -20,7 +20,7 @@ Object.keys(coords.coords).map((key) => {
 outputStr = outputStr.substring(0, outputStr.length - 1);
 
 outputStr = outputStr + "}";
-fs.writeFile(outputFilePath, parser(coords.coords["ca"], 1), err => {
+fs.writeFile(outputFilePath, outputStr,  err => {
   if (err) {
     console.error(err)
     return

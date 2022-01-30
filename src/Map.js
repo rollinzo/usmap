@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {usMap} from './coords'
+// import {usMapsmallest} from './maps/usMapsmallest.js';
 import './Map.css';
 import {svgParse2Resize} from './svgParse2Resize';
+
+// const usMap = usMapsmallest;
+
 
 export default function Map(){
   const [displayWidth, setDisplayWidth] = useState(getWidth());

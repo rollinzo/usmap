@@ -4,15 +4,21 @@ const coords = require('./coordsCommonJS.js');
 
 const fs = require('fs');
 
-const outputFilePath = "./generated_coords/usMapsmallest.js";
+const filterCommas = (stateData) => {
+  return stateData.replace(/,/g,' ');
+}
+//TODO: print a comment in the output file with the parameters that are given to createMap
+
+const outputFilePath = "./generated_coords/usMapSmallest.js";
 const floatScaleFactor = 0.4;
 const outputVariableName = "usMapSmallest";
 
-let outputStr = "export const " + outputVariableName + "= {";
+let outputStr = "//FloatScaleFactor: " + floatScaleFactor + "\n";
+outputStr = outputStr + "export const " + outputVariableName + "= {";
 
 Object.keys(coords.coords).map((key) => {
   outputStr = outputStr + "'" + key + "':" + "'";
-  outputStr = outputStr + parser(coords.coords[key], floatScaleFactor) + "',";
+  outputStr = outputStr + parser(filterCommas(coords.coords[key]), floatScaleFactor) + "',";
  });
 
 // "chop!"

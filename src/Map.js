@@ -5,6 +5,7 @@ import {usMapMiddle} from './maps/usMapMiddle.js';
 import {usMapBig} from './maps/usMapBig.js';
 import './Map.css';
 import {svgParse2Resize} from './svgParse2Resize';
+import {states} from './states.js';
 
 export default function Map(){
   //Minimum screen width for map display:
@@ -32,51 +33,18 @@ export default function Map(){
   // const [selectedState, setSelectedState] = useState("Click on a State");
 
 //initialize map size
-  useEffect(() => {
-    handleResize();
-  },[]);
+  // useEffect(() => {
+  //   handleResize();
+  // },[]);
 
   const handleResize = () => {
     setDisplayWidth(getWidth());
-    // if (displayWidth < 600) {
-    //   setMapCoords("altDisplay");
-    // }
-    // else if (displayWidth < 800) {
-    //   setMapWidth(600);
-    //   setMapHeight(400);
-    //   setMapCoords("Smallest");
-    //
-    //   setTopButtonY(50);
-    //   setXAlignment(480);
-    //
-    // } else if (displayWidth >= 800 && displayWidth < 1000) {
-    //
-    //     setMapWidth(750);
-    //     setMapHeight(500);
-    //     setMapCoords("Middle");
-    //     setTopButtonY(62.5);
-    //     setXAlignment(580);
-    // } else {
-    //
-    //   setMapWidth(1000);
-    //   setMapHeight(650);
-    //   setMapCoords("Big");
-    //   setTopButtonY(80);
-    //   setXAlignment(850);
-    // }
 }
 
   function getWidth() {
     //https://stackoverflow.com/a/28241682
     return document.body.clientWidth || document.documentElement.clientWidth;
 
-    // return Math.max(
-      // document.body.scrollWidth,
-      // document.documentElement.scrollWidth,
-      // document.body.offsetWidth,
-      // document.documentElement.offsetWidth,
-
-    // );
   }
 
   //https://www.pluralsight.com/guides/re-render-react-component-on-window-resize
@@ -130,14 +98,24 @@ export default function Map(){
   const smallStateButtons = (topButtonY, xAlignment, mapWidth, mapHeight) => {
     const smallStates = ["nh", "vt", "ma", "ri", "ct", "nj", "md", "de", "dc"]
     return smallStates.map((myState, index) =>{
-      let yAlignment = topButtonY + (index * (0.05 * mapHeight));
-      return <SmallState key={"small" + myState} state={myState} x={xAlignment} y={yAlignment} />;
+      let yAlignment = topButtonY + (index * (0.07 * mapHeight));
+      return <SmallState key={"small" + myState} state={myState} x={xAlignment} y={yAlignment} clickAction={visitStatePage} />;
     });
   }
 
   const SmallState = (props) => {
+    const [rectClass, setRectClass] = useState("noHighlight");
+    const highlightState = () => {
+      setRectClass("highlight");
+    }
+    const deHighlightState = () => {
+      setRectClass("noHighlight");
+    }
     return (<React.Fragment>
-             <text x={props.x} y={props.y} color="black">{props.state.toUpperCase()}</text>
+             <rect class={rectClass} x={props.x-2} y={props.y-15} width="30" height="20" rx="3px" onMouseOver={highlightState} onMouseOut={deHighlightState} />
+             <text x={props.x} y={props.y} color="black" onMouseOver={highlightState} onMouseOut={deHighlightState} onClick={()=>{ props.clickAction(props.state)}}>
+               {props.state.toUpperCase()}
+             </text>
             </React.Fragment>);
   }
 
@@ -148,15 +126,32 @@ export default function Map(){
   }
 
 
-  const altDisplay = () => {
-    return <div id="mapDiv">Display Alternate to Map
-            </div>;
+  const AltDisplay = () => {
+    return <div>Display Map Alternate</div>;
+    // const [stateIndex, setStateIndex] = useState(0);
+    // const [scrollVal, setScrollVal] = useState(0);
+    // useEffect(() => {
+    //   console.log(scrollVal);
+    // });
+    // const statesList = () => {
+    //   return states.map((stateObj) => {
+    //     return <div>{stateObj["State"]}</div>;
+    //   });
+    // };
+    //
+    // // document.addEventListener('scroll', (e) => { setScrollVal(window.scrollY) });
+    // var scrollPos = document.getElementByID('mapDiv')
+    // return <div id="mapDiv">Display Alternate to Map
+    //           <div>ScrollVal: {scrollVal}</div>
+    //           <hr />
+    //           <div id="statesList">{statesList()} </div>
+    //         </div>;
   }
 
   const displayMapBasedOnWidth = () => {
     if (displayWidth < 600) {
     // if (displayWidth > minScreenWidth) {
-      return altDisplay();
+      return <AltDisplay />;
     }
     let mapWidth;
     let mapHeight;
@@ -167,18 +162,25 @@ export default function Map(){
       mapWidth = 500;
       mapHeight = 330;
       myMapCoords = usMapSmallest;
+      smallStateTopY = 40;
+      smallStateX = 390;
     } else if (displayWidth >= 800 && displayWidth < 1300) {
       mapWidth = 670;
       mapHeight = 440;
       myMapCoords = usMapMiddle;
+      smallStateTopY = 62.5;
+      smallStateX = 580;
     } else {
       mapWidth = 1000;
       mapHeight = 660;
       myMapCoords = usMapBig;
+      smallStateTopY = 80;
+      smallStateX = 850;
     }
     return <div id="mapDiv">
               <svg id="theMap" width={mapWidth} height={mapHeight}>
                  {allStates(myMapCoords)}
+                 {smallStateButtons(smallStateTopY, smallStateX, mapWidth, mapHeight)}
               </svg>
            </div>;
 } //end of displayMapBasedOfWidth
@@ -191,7 +193,7 @@ export default function Map(){
 
   return <div id="mapWrapper">
            {displayMapBasedOnWidth()}
-           {displayDisplayData()}
+
          </div>;
 
 } //end of Map()

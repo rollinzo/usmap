@@ -5,3 +5,22 @@
    -webkit-transform: scale(0.1); */
 
 }
+
+rect.noHighlight {
+  fill:lightblue;
+  stroke: lightblue;
+}
+
+rect.highlight {
+  fill:red;
+  stroke: red
+}
+
+#statesList { height: 200px; overflow: scroll;
+              -ms-overflow-style: none;  /* IE and Edge */
+               scrollbar-width: none;  /* Firefox */
+             }
+
+#statesList::-webkit-scrollbar {
+  display: none;
+}

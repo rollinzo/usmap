@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 // import {usMap} from './coords'
 import {usMapSmallest} from './maps/usMapSmallest.js';
+import {usMapMediumSmall} from './maps/usMapMediumSmall.js';
+
 import {usMapMiddle} from './maps/usMapMiddle.js';
 import {usMapBig} from './maps/usMapBig.js';
+import {usMapBigger} from './maps/usMapBigger.js';
 import './Map.css';
 import {svgParse2Resize} from './svgParse2Resize';
 import {states} from './states.js';
@@ -112,7 +115,7 @@ export default function Map(){
       setRectClass("noHighlight");
     }
     return (<React.Fragment>
-             <rect class={rectClass} x={props.x-2} y={props.y-15} width="30" height="20" rx="3px" onMouseOver={highlightState} onMouseOut={deHighlightState} />
+             <rect className={rectClass} x={props.x-2} y={props.y-15} width="30" height="20" rx="3px" onMouseOver={highlightState} onMouseOut={deHighlightState} />
              <text x={props.x} y={props.y} color="black" onMouseOver={highlightState} onMouseOut={deHighlightState} onClick={()=>{ props.clickAction(props.state)}}>
                {props.state.toUpperCase()}
              </text>
@@ -158,24 +161,36 @@ export default function Map(){
     let smallStateTopY;
     let smallStateX;
     let myMapCoords;
-    if (displayWidth >= 600 && displayWidth < 800) {
+    if (displayWidth >= 600 && displayWidth < 650) {
       mapWidth = 500;
       mapHeight = 330;
       myMapCoords = usMapSmallest;
       smallStateTopY = 40;
       smallStateX = 390;
-    } else if (displayWidth >= 800 && displayWidth < 1300) {
+    } else if (displayWidth >= 650 && displayWidth < 715) {
+      mapWidth = 585;
+      mapHeight = 390;
+      myMapCoords = usMapMediumSmall;
+      smallStateTopY = 50;
+      smallStateX = 430;
+    } else if (displayWidth >= 715 && displayWidth < 800) {
       mapWidth = 670;
       mapHeight = 440;
-      myMapCoords = usMapMiddle;
+      myMapCoords = usMapBig;
       smallStateTopY = 62.5;
       smallStateX = 580;
+    } else if (displayWidth >= 800 && displayWidth < 990) {
+      mapWidth = 750;
+      mapHeight = 500;
+      myMapCoords = usMapBigger;
+      smallStateTopY = 70;
+      smallStateX = 670;
     } else {
-      mapWidth = 1000;
-      mapHeight = 660;
-      myMapCoords = usMapBig;
-      smallStateTopY = 80;
-      smallStateX = 850;
+      mapWidth = 585;
+      mapHeight = 390;
+      myMapCoords = usMapMiddle;
+      smallStateTopY = 50;
+      smallStateX = 470;
     }
     return <div id="mapDiv">
               <svg id="theMap" width={mapWidth} height={mapHeight}>

@@ -9,9 +9,9 @@ const filterCommas = (stateData) => {
 }
 //TODO: print a comment in the output file with the parameters that are given to createMap
 
-const outputFilePath = "./generated_coords/usMapSmallest.js";
-const floatScaleFactor = 0.4;
-const outputVariableName = "usMapSmallest";
+const outputFilePath = "./generated_coords/usMapBigger.js";
+const floatScaleFactor = 0.7;
+const outputVariableName = "usMapBigger";
 
 let outputStr = "//FloatScaleFactor: " + floatScaleFactor + "\n";
 outputStr = outputStr + "export const " + outputVariableName + "= {";

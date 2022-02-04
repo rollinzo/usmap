@@ -130,25 +130,24 @@ export default function Map(){
 
 
   const AltDisplay = () => {
-    return <div>Display Map Alternate</div>;
+    //return <div>Display Map Alternate</div>;
     // const [stateIndex, setStateIndex] = useState(0);
     // const [scrollVal, setScrollVal] = useState(0);
     // useEffect(() => {
     //   console.log(scrollVal);
     // });
-    // const statesList = () => {
-    //   return states.map((stateObj) => {
-    //     return <div>{stateObj["State"]}</div>;
-    //   });
-    // };
+    const statesList = () => {
+      return states.map((stateObj) => {
+        return <div class="stateInList"><h1><a href="/"> {stateObj["State"]}</a></h1></div>;
+      });
+    };
     //
     // // document.addEventListener('scroll', (e) => { setScrollVal(window.scrollY) });
     // var scrollPos = document.getElementByID('mapDiv')
-    // return <div id="mapDiv">Display Alternate to Map
-    //           <div>ScrollVal: {scrollVal}</div>
-    //           <hr />
-    //           <div id="statesList">{statesList()} </div>
-    //         </div>;
+    return <div id="mapDiv">
+              <h1>Choose Your State:</h1>
+              <div id="statesList">{statesList()} </div>
+            </div>;
   }
 
   const displayMapBasedOnWidth = () => {

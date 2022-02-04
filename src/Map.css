@@ -24,3 +24,15 @@ rect.highlight {
 #statesList::-webkit-scrollbar {
   display: none;
 }
+
+.stateInList {
+  border: 1px black solid;
+  background-color: #a5b3cc;
+  padding: 5px;
+  padding-left: 20px;
+}
+
+.stateInList h1 {
+  font-size: 20px;
+  color: white;
+}
